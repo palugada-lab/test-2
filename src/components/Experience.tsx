@@ -4,7 +4,7 @@ const Experience = () => {
   const experiences = [
     {
       title: 'Marketing Intern',
-      company: 'Startup Lokal',
+      company: 'Startup',
       period: 'Juni 2023 - Agustus 2023',
       location: 'Jakarta, Indonesia',
       achievements: [
