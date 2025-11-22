@@ -1,4 +1,4 @@
-import { Briefcase, TrendingUp, Users } from 'lucide-react';
+import { Briefcase, TrendingUp, Users, Calendar, MapPin } from 'lucide-react';
 
 const Experience = () => {
   const experiences = [
@@ -33,8 +33,18 @@ const Experience = () => {
   ];
 
   const colorClasses = {
-    blue: 'bg-blue-100 text-blue-700',
-    green: 'bg-green-100 text-green-700'
+    blue: {
+      bg: 'bg-blue-100',
+      text: 'text-blue-700',
+      border: 'border-blue-200',
+      hover: 'hover:border-blue-400'
+    },
+    green: {
+      bg: 'bg-green-100',
+      text: 'text-green-700',
+      border: 'border-green-200',
+      hover: 'hover:border-green-400'
+    }
   };
 
   return (
@@ -45,31 +55,52 @@ const Experience = () => {
           Pengalaman Kerja
         </h2>
 
-        <div className="space-y-8">
+        <div className="grid md:grid-cols-2 gap-6">
           {experiences.map((exp, index) => {
             const Icon = exp.icon;
+            const colors = colorClasses[exp.color as keyof typeof colorClasses];
+            
             return (
-              <div key={index} className="relative pl-8 border-l-2 border-slate-200 hover:border-blue-400 transition-colors duration-300">
-                <div className={`absolute -left-5 top-0 p-2.5 rounded-full ${colorClasses[exp.color as keyof typeof colorClasses]} shadow-md`}>
-                  <Icon size={20} />
+              <div
+                key={index}
+                className={`group border-2 ${colors.border} ${colors.hover} rounded-xl p-6 transition-all duration-300 hover:shadow-xl`}
+              >
+                {/* Header Card */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className={`p-3 rounded-lg ${colors.bg} ${colors.text} group-hover:scale-110 transition-transform duration-300`}>
+                    <Icon size={24} />
+                  </div>
+                  <div className={`px-3 py-1 rounded-full text-xs font-medium ${colors.bg} ${colors.text}`}>
+                    <Briefcase size={12} className="inline mr-1" />
+                    {index === 0 ? 'Internship' : 'Leadership'}
+                  </div>
                 </div>
 
-                <div className="pb-6">
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-3">
-                    <div>
-                      <h3 className="text-xl font-bold text-slate-900">{exp.title}</h3>
-                      <p className="text-blue-600 font-semibold">{exp.company}</p>
-                    </div>
-                    <div className="text-slate-600 text-sm md:text-right">
-                      <p className="font-medium">{exp.period}</p>
-                      <p>{exp.location}</p>
-                    </div>
-                  </div>
+                {/* Title & Company */}
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">{exp.title}</h3>
+                  <p className="text-blue-600 font-semibold text-lg">{exp.company}</p>
+                </div>
 
-                  <ul className="space-y-2 mt-4">
+                {/* Period & Location */}
+                <div className="flex flex-col gap-2 mb-4 pb-4 border-b border-slate-200">
+                  <div className="flex items-center gap-2 text-slate-600 text-sm">
+                    <Calendar size={16} className="flex-shrink-0" />
+                    <span>{exp.period}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-600 text-sm">
+                    <MapPin size={16} className="flex-shrink-0" />
+                    <span>{exp.location}</span>
+                  </div>
+                </div>
+
+                {/* Achievements */}
+                <div>
+                  <h4 className="text-sm font-semibold text-slate-700 mb-3">Key Achievements:</h4>
+                  <ul className="space-y-2">
                     {exp.achievements.map((achievement, i) => (
-                      <li key={i} className="flex items-start gap-3 text-slate-700">
-                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
+                      <li key={i} className="flex items-start gap-2 text-slate-700 text-sm">
+                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0"></span>
                         <span className="leading-relaxed">{achievement}</span>
                       </li>
                     ))}
